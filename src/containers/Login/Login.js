@@ -14,6 +14,7 @@ class SigninForm extends React.Component{
       password:null,
       name:null,
       signup:false,
+      message:null,
       logged_in: localStorage.getItem('token') ? true : false,
     }
     this.Username = this.Username.bind(this);    
@@ -51,14 +52,26 @@ class SigninForm extends React.Component{
     })
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.access);
-        localStorage.setItem('user', json.username)
-        this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.username
-        });
-        this.props.history.push("/dashboard"); 
+        console.log(json)
+        if(json.access && json.username && json.refresh){
+          localStorage.setItem('token', json.access);
+          localStorage.setItem('user', json.username)
+          this.setState({
+            logged_in: true,
+            displayed_form: '',
+            username: json.username
+          });
+          this.props.history.push("/");
+        }
+        else{
+          this.setState({
+            message:(
+            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:1+'%',borderRadius:5+'px'}}>
+                {json.detail}
+            </div>)
+            });
+        }
+         
       });
   }
 
@@ -75,8 +88,9 @@ class SigninForm extends React.Component{
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
-      .then(json => {
+    .then(res => res.json())
+    .then(json => {
+      if(json.access && json.username && json.refresh){
         localStorage.setItem('token', json.access);
         localStorage.setItem('user', json.username)
         this.setState({
@@ -84,9 +98,19 @@ class SigninForm extends React.Component{
           displayed_form: '',
           username: json.username
         });
-        this.props.history.push("/company"); 
-      });
+        this.props.history.push("/dashboard");
+      }
+      else{
+        this.setState({
+          message:(
+          <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+              {json.detail}
+          </div>)
+          });
+      }
+    });
   }
+
   userForm = () =>{
     this.setState({form: (<>
       <div className="card-header">
@@ -157,6 +181,7 @@ class SigninForm extends React.Component{
   render(){
     return(
       <div>
+        {this.state.message}
         <div className="card mx-auto" style={{width:30+'%',marginTop:10+'%',borderRadius:5+'px'}}>
           <ul class="nav nav-pills nav-justified">
                             <li className="nav-item">

@@ -9,12 +9,18 @@ class Home extends Component{
             form:null,
             jobs:null,
             show:false,
-            logged_in:localStorage.getItem('user')?true:false
+            logged_in:localStorage.getItem('user')?localStorage.getItem('user'):null,
+            username:null,
+            token:localStorage.getItem('token')?localStorage.getItem('token'):null,
         }
     }
     componentDidMount(){
-     this.viewJob(); 
+     if(this.state.logged_in!==undefined && this.state.token!==undefined){
+         this.setState({username:this.state.logged_in});
+     }
+     this.viewJob();     
     }
+    
     viewJob = async() =>{
         if(this.state.logged_in){
             const data  = {
@@ -44,6 +50,7 @@ class Home extends Component{
             });
         }
         else{
+            console.log("called")
             await fetch('http://localhost:8000/jobs/get_jobs/', {
             method: 'get',
             headers: {
@@ -76,7 +83,8 @@ class Home extends Component{
                 job:job.id,
                 user:job.id
             }
-            await fetch('http://localhost:8000/jobs/apply-job/', {
+            console.log(data);
+            await fetch('http://localhost:8000/jobs/apply_job/', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

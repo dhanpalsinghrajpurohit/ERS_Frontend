@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-class Shortlist extends Component{
+import React, { Component } from "react";
+
+class Selected extends Component{
     constructor(props){
         super(props);
         this.jobList = null;
-        this.candidateList = null;
+        this.candidateListView = null;
         this.experienceArray = {
             '0':"Fresher",
             '1':"1 Year Exp",
@@ -19,23 +20,20 @@ class Shortlist extends Component{
             '5':'M.Sc',
         }
         this.state = {
-            form:null,
+            jobtitle:null,
             jobs:null,
-            value:null,
             candidateList:null,
             message:null,
-            jobid:null,
-            username : localStorage.getItem('user')?localStorage.getItem('user'):false,
-        };
-        this.Company = this.Company.bind(this);
-        this.post_select = this.post_select.bind(this);
+        }
+        this.JobTitle = this.JobTitle.bind(this)
     }
+
     componentDidMount(){
         this.get_jobs();
-        setTimeout(() => this.setState({message:''}), 9000);
     }
-    Company(event){
-        this.setState({value:event.target.value});
+
+    JobTitle(event){
+        this.setState({jobtitle:event.target.value})
     }
 
     // get job and display in dropdown
@@ -68,10 +66,10 @@ class Shortlist extends Component{
     get_candidate = async(event) => {
         event.preventDefault();
         const data = {
-            job : this.state.value
+            job : this.state.jobtitle
         };
         console.log(data);
-        await fetch('http://localhost:8000/jobs/get_shortlist/', {
+        await fetch('http://localhost:8000/jobs/get_selectedlist/', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -95,89 +93,9 @@ class Shortlist extends Component{
             });
         }
         });
-    }
-
-    //reload candiate list 
-    reload_candidate = async() => {
-        const data = {
-            job : this.state.value
-        };
-        console.log(data);
-        await fetch('http://localhost:8000/jobs/get_shortlist/', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(res => {
-            console.log(res.data);
-            if(res.status==="success"){
-                this.setState({
-                    candidateList:res.data
-                });
-            }
-        else{
-            this.setState({
-            message:(
-            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
-                Something went wrong!!!
-            </div>)
-            });
-        }
-        });
-    }
-  
-    post_select = async(user) => {
-        const data = {
-            job : parseInt(this.state.value),
-            user: user,
-            is_shortlist:"3"
-        };
-        await fetch("http://localhost:8000/jobs/insert_selectedlist/",{
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(res => {
-            if(res.status==="success"){
-                this.candidateListView = null;
-            }
-            if(res.status==="failed"){
-                this.setState({message:res.message})
-            }
-        });       
-        this.reload_candidate();
-    }
-
-    post_reject = async(user) => {
-        const data = {
-            job : parseInt(this.state.value),
-            user: user,
-            is_shortlist:"2"
-        };
-        await fetch("http://localhost:8000/jobs/update_shortlist/",{
-            method:"PUT",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(res => {
-            if(res.status==="failed"){
-                this.setState({message:res.message})
-            }
-        });       
-        this.reload_candidate();
     }
 
     render(){
-        
         if(this.state.jobs!==null){
             this.jobList = (<>
                     {this.state.jobs.map((job)=>{
@@ -202,7 +120,6 @@ class Shortlist extends Component{
                             <th>Experience</th>
                             <th>Contact No</th>
                             <th>Skills</th>
-                            <th>Resume Link</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -216,9 +133,6 @@ class Shortlist extends Component{
                                 <td>{this.experienceArray[applicant.experience]}</td>
                                 <td>{applicant.contactNumber}</td>
                                 <td>{applicant.skills}</td>
-                                <td>{applicant.ResumeLink}</td>
-                                <td><button className="btn btn-success" onClick={()=>this.post_select(applicant.user)}>Select</button></td>
-                                <td><button className="btn btn-danger" onClick={()=>this.post_reject(applicant.user)}>Reject</button></td>
                                 </tr>
                     )})
                     }
@@ -227,11 +141,11 @@ class Shortlist extends Component{
             </div>
             );
         }
-        return( 
+        return(
             <React.Fragment>
                 <div className='card'>
                 {this.state.message}
-                <h2>Shortlisted Candidate</h2>
+                <h2>Selected Candidate</h2>
                 <div className="card-body mx-auto" 
                     style={{width:50+'%',marginTop:1+'%',borderRadius:5+'px'}}>
                     
@@ -242,7 +156,7 @@ class Shortlist extends Component{
                     <div className="col-4">
                         <select id="title" className="form-select form-control-plaintext" 
                             defaultValue={{ label: "Select an Option", value: 0 }}
-                            onChange={(e) => this.Company(e)}>
+                            onChange={(e) => this.JobTitle(e)}>
                                 <option selected disabled hidden>Select an Option</option>
                                 {this.jobList}
                         </select>
@@ -259,8 +173,8 @@ class Shortlist extends Component{
                 </div>
             </div>
             </React.Fragment>
-        );
+        )
     }
 }
 
-export default Shortlist;
+export default Selected;

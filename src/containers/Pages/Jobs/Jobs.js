@@ -1,5 +1,6 @@
 import React,{ Component } from "react";
 import { Button,Modal} from 'react-bootstrap';  
+import { Redirect } from "react-router";
 
 class Jobs extends  Component{
     constructor(props){
@@ -47,8 +48,10 @@ class Jobs extends  Component{
     }
     
     componentDidMount(){
+        
+        setTimeout(()=>this.setState({message:null}),9000);
         this.toggleTab(1);
-        this.get_jobs()
+        this.get_jobs();
     }
 
     jobpostForm = () => {
@@ -239,7 +242,8 @@ class Jobs extends  Component{
             description : this.state.description,
             
         };
-        await fetch('http://localhost:8000/jobs/insert-job/', {
+        console.log(data);
+        await fetch('http://localhost:8000/jobs/insert_job/', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'

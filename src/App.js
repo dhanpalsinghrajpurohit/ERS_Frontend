@@ -18,6 +18,8 @@ import Jobs from "./containers/Pages/Jobs/Jobs";
 import Dashboard from "./containers/Pages/Dashboard/Dashboard";
 import Applicant from "./containers/Pages/Applicant/Applicant";
 import Shortlist from "./containers/Pages/Shortlist/Shortlist";
+import Selected from "./containers/Pages/Selected/Selected";
+import JobStatus from "./containers/Pages/JobStatus/JobStatus";
 
 function App() {
   function logout(){
@@ -49,20 +51,20 @@ function App() {
                 </div>
             </div>
             {authLink}
-            {/* <Link to="/signup"  className="btn btn-outline-primary mr-1">SignUp</Link>
-            <Link to="/signin" className="btn btn-outline-primary ml-1">SignIn</Link> */}
             </nav>
             <Switch>
-                <Route path="/signin" component={SigninForm} />
-                <Route path="/signup" component={SignupForm} />
-                <Route path="/company" component={Company} />
-                <Route path="/job" component={Jobs} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/applicant" component={Applicant} />
-                <Route path="/shortlist" component={Shortlist} />
-                <Route path="/" component={Home} />
-            </Switch>
-            </Router>
+                  <Route path="/signin" component={SigninForm} />
+                  <Route path="/signup" component={SignupForm} />
+                  <Route path="/company" component={Company} />
+                  <Route path="/job" component={Jobs} />
+                  <Route path="/dashboard" component={Dashboard} />
+                  <Route path="/applicant" component={Applicant} />
+                  <Route path="/shortlist" component={Shortlist} />
+                  <Route path="/selected" component={Selected} />
+                  <Route path="/jobstatus" component={JobStatus} />
+                  <Route path="/" component={Home} />
+          </Switch>
+        </Router>
     </div>
   );
 }
