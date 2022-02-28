@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee,faCheck,faClose } from '@fortawesome/free-solid-svg-icons';
 
 class JobStatus extends Component{
     constructor(props){
@@ -9,6 +11,7 @@ class JobStatus extends Component{
             username:null,
         }
     }
+
     componentDidMount(){
         this.get_status();
         if(localStorage.getItem('user')){
@@ -35,6 +38,7 @@ class JobStatus extends Component{
             }
         })
     }
+
     render(){
         if(this.state.data!==null){
             this.state.data.map((row,index)=>{
@@ -59,6 +63,13 @@ class JobStatus extends Component{
                 </tr>
             </thead>
         <tbody>
+            <tr>
+                    <th>Index</th>
+                    <th>Dhanpal Singh</th>
+                    <th>Software Engineer</th>
+                    <th><FontAwesomeIcon icon={faCheck} color={"green"}></FontAwesomeIcon></th>
+                    <th><FontAwesomeIcon icon={faClose} color={"red"}></FontAwesomeIcon></th>
+                </tr>
           {this.state.data}
         </tbody> 
         </table>
