@@ -65,23 +65,23 @@ class Jobs extends  Component{
             <form method="post" onSubmit={this.jobpost}>
             <div className="form-group m-2">
                 <label htmlFor="title">Title</label>
-                <input type="text" className="form-control" id="title" placeholder="Enter Title Name"  onChange={e=>this.Title(e)}/>
+                <input type="text" className="form-control" id="title" placeholder="Enter Title Name"  onChange={e=>this.Title(e)} required minLength={8}  maxLength={20}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="description">Description</label>
-                <input type="text" className="form-control" id="description" placeholder="Enter Description"  onChange={e=>this.Description(e)}/>
+                <input type="text" className="form-control" id="description" placeholder="Enter Description"  onChange={e=>this.Description(e)} required minLength={20} maxLength={100}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="skill">Skills</label>
-                <input type="text" className="form-control" id="skill" placeholder="Enter Skills"  onChange={e=>this.Skills(e)}/>
+                <input type="text" className="form-control" id="skill" placeholder="Enter Skills"  onChange={e=>this.Skills(e)} required minLength={20} maxLength={40}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="salary">Salary</label>
-                <input type="number" className="form-control" id="salary" placeholder="Enter Salary"  onChange={e=>this.Salary(e)}/>
+                <input type="number" className="form-control" id="salary" placeholder="Enter Salary"  onChange={e=>this.Salary(e)} required minLength={3}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="vacancy">Vacancy</label>
-                <input type="number" className="form-control" id="vacancy" placeholder="Enter Vacancy"  onChange={e=>this.Vacancy(e)}/>
+                <input type="number" className="form-control" id="vacancy" placeholder="Enter Vacancy"  onChange={e=>this.Vacancy(e)} required minLength={1}/>
             </div>
             <button type="submit" className="btn btn-primary">Post</button>
             </form>
@@ -100,23 +100,23 @@ class Jobs extends  Component{
             <form method="post" onSubmit={this.update_job}>
             <div className="form-group m-2">
                 <label htmlFor="title">Title</label>
-                <input type="text" className="form-control" id="title" defaultValue={this.state.title} placeholder="Enter Title Name"  onChange={this.Title}/>
+                <input type="text" className="form-control" id="title" defaultValue={this.state.title} placeholder="Enter Title Name"  onChange={this.Title} required minLength={8}  maxLength={20}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="description">Description</label>
-                <input type="text" className="form-control" id="description" placeholder="Enter Description" defaultValue={this.state.description}  onChange={this.Description}/>
+                <input type="text" className="form-control" id="description" placeholder="Enter Description" defaultValue={this.state.description}  onChange={this.Description} required minLength={20}  maxLength={100}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="skill">Skills</label>
-                <input type="text" className="form-control" id="skill" placeholder="Enter Skills" defaultValue={this.state.skills} onChange={this.Skills}/>
+                <input type="text" className="form-control" id="skill" placeholder="Enter Skills" defaultValue={this.state.skills} onChange={this.Skills} required minLength={8}  maxLength={40}/>
             </div>
             <div className="form-group m-2">
                 <label htmlFor="salary">Salary</label>
-                <input type="number" className="form-control" id="salary" placeholder="Enter Salary" defaultValue={this.state.salary}  onChange={this.Salary}/>
+                <input type="number" className="form-control" id="salary" placeholder="Enter Salary" defaultValue={this.state.salary}  onChange={this.Salary} required minLength={8} />
             </div>
             <div className="form-group m-2">
                 <label htmlFor="vacancy">Vacancy</label>
-                <input type="number" className="form-control" id="vacancy" placeholder="Enter Vacancy" defaultValue={this.state.vacancy} onChange={this.Vacancy}/>
+                <input type="number" className="form-control" id="vacancy" placeholder="Enter Vacancy" defaultValue={this.state.vacancy} onChange={this.Vacancy} required minLength={8} />
             </div>
             <button type="submit" className="btn btn-primary">Update</button>
             </form>

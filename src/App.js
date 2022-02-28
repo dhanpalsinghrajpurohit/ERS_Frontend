@@ -20,6 +20,8 @@ import Applicant from "./containers/Pages/Applicant/Applicant";
 import Shortlist from "./containers/Pages/Shortlist/Shortlist";
 import Selected from "./containers/Pages/Selected/Selected";
 import JobStatus from "./containers/Pages/JobStatus/JobStatus";
+import Profile from "./containers/Pages/Profiles/Profiles";
+import Interviews from "./containers/Pages/Interviews/Interview";
 
 function App() {
   function logout(){
@@ -62,6 +64,9 @@ function App() {
                   <Route path="/shortlist" component={Shortlist} />
                   <Route path="/selected" component={Selected} />
                   <Route path="/jobstatus" component={JobStatus} />
+                  <Route path="/profile" component={Profile} />
+                  <Route path="/interviews" component={Interviews} />
+
                   <Route path="/" component={Home} />
           </Switch>
         </Router>

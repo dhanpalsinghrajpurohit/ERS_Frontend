@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import  { Navigate,Redirect } from 'react-router-dom'
+import  { Navigate,Redirect } from 'react-router-dom';
+import {Link} from "react-router-dom";
+
 import classes from './Signup.module.css';
 class SignupForm extends React.Component{
   constructor(props){
@@ -16,12 +18,13 @@ class SignupForm extends React.Component{
       logged_in: localStorage.getItem('token') ? true : false,
       authMessage:null,
     }
-    this.errorMessage = null;
+    this.Message = null;
     this.Username = this.Username.bind(this);
     this.Email = this.Email.bind(this);
     this.Password = this.Password.bind(this);
     this.Name = this.Name.bind(this);
     this.userSignup = this.userSignup.bind(this);
+    this.hrSignup  = this.hrSignup.bind(this);
   }
 
   Name(event){
@@ -55,77 +58,38 @@ class SignupForm extends React.Component{
     this.userForm();
   }
 
-  userSignup= async(event)=>{
-      event.preventDefault();
-      const data = {
-        username:this.state.username,
-        first_name : this.state.name,
-        email : this.state.email,
-        password  : this.state.password
-      };
-      fetch('http://localhost:8000/accounts/users/', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(res => {
-          if(res.status!=400){
-            const json = res.json();
-            localStorage.setItem('token', json.token);
-            this.setState({
-              logged_in: true,
-              displayed_form: '',
-              username: json.username
-            });
-            this.props.history.push("/signin");  
-          }
-          else{
-            this.errorMessage = (
-              <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
-                This is a primary alert—check it out!
-              </div>);
-          }
-      });
-  }
-
-  hrSignup = async(event) => {
-    event.preventDefault();
-    const data = {
-      username:this.state.username,
-      first_name : this.state.name,
-      email : this.state.email,
-      password  : this.state.password
-    };
-     fetch('http://localhost:8000/accounts/users/', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => {
-        const json = res.json();
-        console.log(json);
-        if(json.status===200){
-          const json = res.json();
-          localStorage.setItem('token', json.token);
-          localStorage.setItem('user', json.username);
-          this.setState({
-            logged_in: true,
-            displayed_form: '',
-            username: json.username
-          });
-          this.props.history.push("/company");  
-        }
-        else{
-          this.errorMessage = (
-            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
-              Something went wrong!!!
-            </div>);
-        }
-      });
+  userForm = () =>{
+    this.setState({form:(<>
+            <div className="card-header">
+            <h1>SignUp Form</h1>
+            </div>
+            <div className="card-body">
+            <form onSubmit={this.userSignup}>
+                <div className="form-group m-2">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Username(e)} required minLength={8}/>
+                </div>
+                <div className="form-group m-2">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Name(e)} required minLength={8}/>
+                </div>
+                <div className="form-group m-2">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" className="form-control"  aria-describedby="emailHelp" placeholder="Enter email" onChange={e=>this.Email(e)} required minLength={8}/>
+                </div>
+                <div className="form-group m-2">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" className="form-control" placeholder="Password" onChange={e=>this.Password(e)} required minLength={8}/>
+                </div>
+            <button type="submit" className="btn btn-primary">SignUp</button>
+            </form>
+            </div>
+            <div className="card-footer">
+            <div>
+            <Link to="/signin" className={classes.forgetPassword}>Or SignIn ?</Link>
+            </div>
+            </div>
+    </>)});
   }
 
   hrForm = () =>{
@@ -137,65 +101,123 @@ class SignupForm extends React.Component{
             <form method="post" onSubmit={this.hrSignup}>
             <div className="form-group m-2">
                     <label for="exampleInputEmail1">Username</label>
-                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Username(e)}/>
+                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Username(e)} required minLength={8}/>
                 </div>
                 <div className="form-group m-2">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Name(e)}/>
+                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Name(e)} required minLength={8}/>
                 </div>
                 <div className="form-group m-2">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control"  aria-describedby="emailHelp" placeholder="Enter email" onChange={e=>this.Email(e)}/>
+                    <input type="email" className="form-control"  aria-describedby="emailHelp" placeholder="Enter email" onChange={e=>this.Email(e)} required minLength={8}/>
                 </div>
                 <div className="form-group m-2">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" placeholder="Password" onChange={e=>this.Password(e)}/>
+                    <input type="password" className="form-control" placeholder="Password" onChange={e=>this.Password(e)} required minLength={8}/>
                 </div>
             <button type="submit" className="btn btn-primary">Sign Up</button>
             </form>
             </div>
             <div className="card-footer">
             <div>
-            <a href="#" className={classes.forgetPassword}>Or SignIn ?</a>
+            <Link to="/signin" className={classes.forgetPassword}>Or SignIn ?</Link>
             </div>
             </div>
     </>)
     });
   }
 
-  userForm = () =>{
-    this.setState({form:(<>
-            <div className="card-header">
-            <h1>SignUp Form</h1>
-            </div>
-            <div className="card-body">
-            <form onSubmit={this.userSignup}>
-                <div className="form-group m-2">
-                    <label for="exampleInputEmail1">Username</label>
-                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Username(e)}/>
-                </div>
-                <div className="form-group m-2">
-                    <label for="exampleInputEmail1">Name</label>
-                    <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="Enter Name" onChange={e=>this.Name(e)}/>
-                </div>
-                <div className="form-group m-2">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control"  aria-describedby="emailHelp" placeholder="Enter email" onChange={e=>this.Email(e)}/>
-                </div>
-                <div className="form-group m-2">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" placeholder="Password" onChange={e=>this.Password(e)}/>
-                </div>
-            <button type="submit" className="btn btn-primary">SignUp</button>
-            </form>
-            </div>
-            <div className="card-footer">
-            <div>
-            <a href="#" className={classes.forgetPassword}>Or SignIn ?</a>
-            </div>
-            </div>
-    </>)});
+  userSignup= async(event)=>{
+    // console.log(this.userForm);
+    console.log(this.state.form)
+      event.preventDefault();
+      const data = {
+        username:this.state.username,
+        first_name : this.state.name,
+        email : this.state.email,
+        password  : this.state.password
+      };
+      await fetch('http://localhost:8000/accounts/users/', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if(res.status==="success"){
+          console.log(res);
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('user',res.data.token['username'])
+          this.setState({
+            logged_in: true,
+            displayed_form: '',
+            username: res.data.token['username']
+          });
+          this.Message = (
+            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+              {res.message}!
+          </div>);
+          this.props.history.push("/signin");  
+        }
+        else{
+          this.Message = (
+            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+              {res.message}!
+            </div>);
+        }
+      });
   }
+
+  hrSignup = async(event) => {
+    alert("work");
+    event.preventDefault();
+    const data = {
+      username:this.state.username,
+      first_name : this.state.name,
+      email : this.state.email,
+      password  : this.state.password
+    };
+     await fetch('http://localhost:8000/accounts/users/', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+      .then(res => {
+        alert("wrkkdf");
+        console.log(res);
+        if(res.status==="success"){
+          console.log(res);
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('user',res.data.token['username'])
+          this.setState({
+            logged_in: true,
+            displayed_form: '',
+            username: res.data.token['username']
+          });
+          this.Message = (
+            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+              {res.message}!
+          </div>);
+          this.props.history.push("/signin");  
+        }
+        else{
+          this.Message = (
+            <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+              {res.message}!
+            </div>);
+        }
+      });
+  }
+
+  
+
+ 
 
   toggleTab = (index)  =>{
     this.setState({toggleStage:index})
@@ -212,7 +234,7 @@ class SignupForm extends React.Component{
   render(){
     return(
       <div>
-        {this.errorMessage}
+        {this.Message}
         <div className="card mx-auto" style={{width:30+'%',marginTop:1+'%',borderRadius:5+'px'}}>
           <ul className="nav nav-pills nav-justified">
                               <li className="nav-item">
