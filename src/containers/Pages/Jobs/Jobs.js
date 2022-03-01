@@ -3,7 +3,7 @@ import { Button,Modal} from 'react-bootstrap';
 import { Redirect } from "react-router";
 
 import Spinner from "../../UI/Spinner/Spinner";
-
+import AdminNavbar from "../../UI/Navbar/AdminNavbar";
 class Jobs extends  Component{
     constructor(props){
         super(props);
@@ -423,6 +423,7 @@ class Jobs extends  Component{
         }
         return(
             <React.Fragment>
+                <AdminNavbar />
                 <div>
                     {this.state.message}
                     {this.state.form}

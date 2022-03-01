@@ -25,7 +25,7 @@ class AdminNavbar extends Component{
             this.setState({authLink:(
                     <React.Fragment>
                         <span className='m-1'>Welcome, {this.state.logged_in}</span>
-                        <Link to="/signup"  className="btn btn-outline-primary mr-1" onClick={this.logout}>Logout</Link>)
+                        <Link to="/signup"  className="btn btn-outline-primary mr-1" onClick={this.logout}>Logout</Link>
                     </React.Fragment>)
             });
         }

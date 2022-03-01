@@ -37,11 +37,14 @@ class Home extends Component{
             })
             .then(res => res.json())
             .then(res => {
+                console.log();
                 if(res.status==="success"){
-                    this.setState({
-                        jobs:res.data
-                    });
-                    this.setState({show:true})
+                    if(res.data.length){
+                        this.setState({
+                            jobs:res.data
+                        });
+                        this.setState({show:true})
+                    }
                 }
                 else{
                     this.setState({errorMessage:(
@@ -109,17 +112,12 @@ class Home extends Component{
         this.viewJob();
     }
     
-
-
-
     render(){
-        
         return(
             <React.Fragment>
                 <Navbar />
                 {this.state.errorMessage}
                 {this.state.show?
-                
                 this.state.jobs.map(job=>{
                     return (
                     <div key={job.id}>
@@ -138,11 +136,10 @@ class Home extends Component{
                             }</div>                                
                         </div>
                     </div>)
-                }):<Spinner isActive={true}/>}
+                }):<div>No Data Available</div>}
+                <Spinner isActive={!this.state.show} />
             </React.Fragment>
-            
         );
-        
     }
 }
 
