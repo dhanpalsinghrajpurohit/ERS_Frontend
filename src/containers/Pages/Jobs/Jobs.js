@@ -2,6 +2,8 @@ import React,{ Component } from "react";
 import { Button,Modal} from 'react-bootstrap';  
 import { Redirect } from "react-router";
 
+import Spinner from "../../UI/Spinner/Spinner";
+
 class Jobs extends  Component{
     constructor(props){
         super(props);
@@ -134,7 +136,6 @@ class Jobs extends  Component{
         })
         .then(res => res.json())
       .then(res => {
-          console.log(res);
           if(res.status==="success"){
             this.setState({
                 jobs:res.data
@@ -314,9 +315,6 @@ class Jobs extends  Component{
         this.toggleTab(1);
     }
     
-
-    
-
     get_applicant = async() =>{
         await fetch("http://localhost:8000/jobs/get-applicant/",{
             method: 'get',
@@ -423,65 +421,15 @@ class Jobs extends  Component{
                 </table>
             </div>);
         }
-        // if(this.state.jobs!==null){
-        //     applicantsList=(<div>
-        //         <table class="table">
-        //             <tr>
-        //                 <th>Name</th>
-        //                 <th>Email</th>
-        //             </tr>
-        //             <tr>
-        //             {this.state.jobs.map(applicantDetail=>{
-        //                 return (<tr key={applicantDetail.id}>
-        //                         <td>{applicantDetail.name}</td>
-        //                         <td>{applicantDetail.email}</td>
-        //                         </tr>
-        //             )})
-        //             }
-        //             </tr>
-        //         </table>
-        //     </div>);
-        // }
         return(
             <React.Fragment>
                 <div>
                     {this.state.message}
                     {this.state.form}
-                    {/* {this.state.errorMessage}
-                    {this.state.applicants===null?
-                    this.state.form: */}
-                    {/* this.state.applicants.map(applicant => {
-                        return (
-                                <div className="mx-auto" 
-                                    style={{width:30+'%',marginTop:1+'%',borderRadius:5+'px'}}>
-                                    <ul class="list-group">
-                                        <button type="button" 
-                                            className="btn btn-primary" 
-                                            data-toggle="modal" 
-                                            data-target="#exampleModalLong" 
-                                            onClick={this.handle_modal.bind(this)}>
-                                            {applicant.title}
-                                        </button>
-                                        <Modal show={this.state.modal} onHide={()=>this.handle_modal()}>  
-                                        <Modal.Header closeButton>Applicants List</Modal.Header>  
-                                        <Modal.Body>
-                                            <Button className="mx-auto" onClick={()=>this.get_applicantdetail(applicant)}>View</Button>
-                                            {   
-                                                this.state.applicantDetails!==null?applicantsList:null
-                                            }
-                                        </Modal.Body>  
-                                        <Modal.Footer>  
-                                            <Button onClick={()=>this.handle_modal()}>Close</Button>  
-                                            <Button onClick={()=>this.handle_modal()}>Save</Button>  
-                                        </Modal.Footer>  
-                                        </Modal>  
-                                    </ul>
-                                </div>)
-                        })} */}
                 </div>
                 <div>
                     <div className="card mx-auto" style={{width:80+'%',marginTop:5+'%',borderRadius:5+'px'}}>
-                        {this.jobList}
+                        {this.jobList===null?<Spinner isActive={true}/>:this.jobList}
                     </div>
                 </div>
             </React.Fragment>

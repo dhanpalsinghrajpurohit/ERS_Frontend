@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { Router, Link, Routes, Route,Switch } from 'react-router-dom';
 
-class Navbar extends Component{
+class AdminNavbar extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -23,10 +23,10 @@ class Navbar extends Component{
           console.log(this.state.logged_in)
         if(this.state.logged_in!=="undefined" && this.state.logged_in!==false){
             this.setState({authLink:(
-                <React.Fragment>
-                    <span className='m-1'>Welcome, {this.state.logged_in}</span>
-                    <Link to="/signup"  className="btn btn-outline-primary mr-1" onClick={this.logout}>Logout</Link>
-                </React.Fragment>)
+                    <React.Fragment>
+                        <span className='m-1'>Welcome, {this.state.logged_in}</span>
+                        <Link to="/signup"  className="btn btn-outline-primary mr-1" onClick={this.logout}>Logout</Link>)
+                    </React.Fragment>)
             });
         }
     }
@@ -34,13 +34,13 @@ class Navbar extends Component{
     render(){
         return(
                 <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#e3f2fd",fontWeight:"bold"}}>
-                <Link className="navbar-brand" to="/">ERS</Link>
+                <Link className="navbar-brand" to="/dashboard">ERS</Link>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                  <div className="navbar-nav">
+                  {/* <div className="navbar-nav">
                   <Link to="/"  className="nav-item nav-link">Home</Link>
                   <Link to="/jobstatus"  className="nav-item nav-link">Status</Link>
                   <Link to="/profile"  className="nav-item nav-link">Profile</Link>
-                  </div>
+                  </div> */}
                 </div>
                 {this.state.authLink}
                 </nav>
@@ -48,4 +48,4 @@ class Navbar extends Component{
     }
 }
 
-export default Navbar;
+export default AdminNavbar;

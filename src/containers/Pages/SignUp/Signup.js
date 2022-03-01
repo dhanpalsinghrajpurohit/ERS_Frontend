@@ -172,7 +172,6 @@ class SignupForm extends React.Component{
   }
 
   hrSignup = async(event) => {
-    alert("work");
     event.preventDefault();
     const data = {
       username:this.state.username,
@@ -189,8 +188,6 @@ class SignupForm extends React.Component{
     })
     .then(res => res.json())
       .then(res => {
-        alert("wrkkdf");
-        console.log(res);
         if(res.status==="success"){
           console.log(res);
           localStorage.setItem('token', res.data.token);
@@ -204,7 +201,7 @@ class SignupForm extends React.Component{
             <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
               {res.message}!
           </div>);
-          this.props.history.push("/signin");  
+          this.props.history.push("/company");  
         }
         else{
           this.Message = (

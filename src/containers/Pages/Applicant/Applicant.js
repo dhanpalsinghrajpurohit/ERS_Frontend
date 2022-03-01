@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+
+import AdminNavbar from '../../UI/Navbar/AdminNavbar';
 class Applicant extends Component{
     constructor(props){
         super(props);
@@ -61,7 +63,8 @@ class Applicant extends Component{
             else{
                 this.setState({
                 message:(
-                <div className="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+                <div className="alert alert-primary mx-auto" role="alert" 
+                    style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
                     Something went wrong!!!
                 </div>)
                 });
@@ -92,7 +95,8 @@ class Applicant extends Component{
             else{
                 this.setState({
                 message:(
-                <div class="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+                <div class="alert alert-primary mx-auto" role="alert" 
+                    style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
                     Something went wrong!!!
                 </div>)
                 });
@@ -118,7 +122,8 @@ class Applicant extends Component{
             if(res.status==="success"){
                 this.setState({
                     message:(
-                    <div className="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+                    <div className="alert alert-primary mx-auto" role="alert" 
+                        style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
                         {res.message}
                     </div>)
                 });
@@ -126,7 +131,8 @@ class Applicant extends Component{
             else{
                 this.setState({
                     message:(
-                    <div className="alert alert-primary mx-auto" role="alert" style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+                    <div className="alert alert-primary mx-auto" role="alert" 
+                        style={{width:30+'%',marginTop:5+'%',borderRadius:5+'px'}}>
                         {res.message}
                     </div>)
                 });
@@ -182,6 +188,7 @@ class Applicant extends Component{
             });
         })
     }
+
     jobpostForm = () => {
         this.setState({form:( 
         <div className="card-body">
@@ -208,6 +215,7 @@ class Applicant extends Component{
         </div>
         )});
     }
+
     render(){
         this.applicant = null;
         if(this.state.jobs!==null){
@@ -249,8 +257,16 @@ class Applicant extends Component{
                                 <td>{applicant.contactNumber}</td>
                                 <td>{applicant.skills}</td>
                                 <td>{applicant.ResumeLink}</td>
-                                <td><button className="btn btn-success" onClick={()=>this.post_select(applicant.user)}>Select</button></td>
-                                <td><button className="btn btn-danger" onClick={()=>this.post_reject(applicant.user)}>Reject</button></td>
+                                <td>
+                                    <button className="btn btn-success" 
+                                        onClick={()=>this.post_select(applicant.user)}>Select
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className="btn btn-danger" 
+                                        onClick={()=>this.post_reject(applicant.user)}>Reject
+                                    </button>
+                                </td>
                                 </tr>
                     )})
                     }
@@ -264,6 +280,7 @@ class Applicant extends Component{
         }
         return( 
             <React.Fragment>
+                <AdminNavbar />
                 <div className='card'>
                 {this.state.message}
                 <div className="card-body mx-auto" 
@@ -292,8 +309,6 @@ class Applicant extends Component{
                 </div>
             </div>
             </React.Fragment>
-            
-            
         );
     }
 }

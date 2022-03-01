@@ -9,7 +9,6 @@ import {
 
 import logo from './logo.svg';
 import './App.css';
-// import Navbar from './containers/UI/Navbar/Navbar';
 import Home from './containers/Pages/Home/Home';
 import SigninForm from "./containers/Login/Login";
 import SignupForm from "./containers/Pages/SignUp/Signup";
@@ -42,7 +41,7 @@ function App() {
   return (
     <div className="App">
         <Router>
-            <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#e3f2fd",fontWeight:"bold"}}>
+            {/* <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#e3f2fd",fontWeight:"bold"}}>
             <Link className="navbar-brand" to="/dashboard">ERS</Link>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
@@ -53,7 +52,7 @@ function App() {
                 </div>
             </div>
             {authLink}
-            </nav>
+            </nav> */}
             <Switch>
                   <Route path="/signin" component={SigninForm} />
                   <Route path="/signup" component={SignupForm} />
@@ -66,7 +65,6 @@ function App() {
                   <Route path="/jobstatus" component={JobStatus} />
                   <Route path="/profile" component={Profile} />
                   <Route path="/interviews" component={Interviews} />
-
                   <Route path="/" component={Home} />
           </Switch>
         </Router>

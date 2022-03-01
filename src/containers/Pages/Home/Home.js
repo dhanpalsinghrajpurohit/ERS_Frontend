@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
+import Navbar from "../../UI/Navbar/Navbar";
+import Spinner from "../../UI/Spinner/Spinner";
 class Home extends Component{
     constructor(props){
         super(props);
@@ -114,11 +116,11 @@ class Home extends Component{
         
         return(
             <React.Fragment>
+                <Navbar />
                 {this.state.errorMessage}
                 {this.state.show?
                 
                 this.state.jobs.map(job=>{
-                    console.log(job)
                     return (
                     <div key={job.id}>
                         <div className="card mx-auto text-left" style={{width:30+'%',marginTop:1+'%',borderRadius:5+'px',textAlign:"left"}}>
@@ -136,7 +138,7 @@ class Home extends Component{
                             }</div>                                
                         </div>
                     </div>)
-                }):null}
+                }):<Spinner isActive={true}/>}
             </React.Fragment>
             
         );

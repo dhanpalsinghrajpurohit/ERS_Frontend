@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import AdminNavbar from "../../UI/Navbar/AdminNavbar";
 class Selected extends Component{
     constructor(props){
         super(props);
@@ -143,6 +144,7 @@ class Selected extends Component{
         }
         return(
             <React.Fragment>
+                <AdminNavbar />
                 <div className='card'>
                 {this.state.message}
                 <h2>Selected Candidate</h2>
@@ -166,12 +168,12 @@ class Selected extends Component{
                     </div>
                 </form>
                 </div>
-            </div>
-            <div>
-                <div className="card mx-auto" style={{width:100+'%',marginTop:5+'%',borderRadius:5+'px'}}>
-                        {this.candidateListView}
                 </div>
-            </div>
+                <div>
+                    <div className="card mx-auto" style={{width:100+'%',marginTop:5+'%',borderRadius:5+'px'}}>
+                        {this.candidateListView}
+                    </div>
+                </div>
             </React.Fragment>
         )
     }

@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+
+import AdminNavbar from '../../UI/Navbar/AdminNavbar';
+
 class Shortlist extends Component{
     constructor(props){
         super(props);
@@ -229,6 +232,7 @@ class Shortlist extends Component{
         }
         return( 
             <React.Fragment>
+                <AdminNavbar/>
                 <div className='card'>
                 {this.state.message}
                 <h2>Shortlisted Candidate</h2>

@@ -1,5 +1,7 @@
 import React,{ Component } from "react";
 import { ThemeProvider } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Navbar from "../../UI/Navbar/Navbar";
 import Jobs from "../Jobs/Jobs";
 
 class Profile extends  Component{
@@ -77,7 +79,12 @@ class Profile extends  Component{
             this.get_profile();
             this.profileForm();
             setTimeout(()=>this.setState({message:null}),9000);    
-        }        
+        }
+        else{
+            this.props.history.push("/signin");  
+
+        }
+                
     }
     
     async get_profile(){
@@ -97,7 +104,7 @@ class Profile extends  Component{
                 console.log(res.data)
                 this.setState({
                     profile:res.data,
-                    id:res.data[0].id,
+                    id:res.data[0].user,
                     fullname:res.data[0].fullname,
                     email:res.data[0].email,
                     contactnumber:res.data[0].contactNumber,
@@ -118,11 +125,10 @@ class Profile extends  Component{
     }
 
     async update_profile(event){
-        alert("work")
         event.preventDefault();
         const body = {
-            'id':this.state.id,
-            'user': localStorage.getItem('user'),
+            'user':this.state.id,
+            'username': localStorage.getItem('user'),
             'fullname':this.state.fullname,
             'email':this.state.email,
             'contactNumber':this.state.contactnumber,
@@ -134,7 +140,7 @@ class Profile extends  Component{
         }
         console.log(body);
         await fetch("http://localhost:8000/accounts/update_user/",{
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -144,7 +150,7 @@ class Profile extends  Component{
         .then(res => {
             console.log(res);
             if(res.status==="success"){
-                this.props.histroy.push("/");
+                this.props.history.push("/");
             }
             else{
                 this.setState({message:res.message})
@@ -226,6 +232,7 @@ class Profile extends  Component{
     render(){
         return(
             <React.Fragment>
+                <Navbar />
                 <div>
                     {this.state.message}
                     {this.state.profile?this.state.form:null}
