@@ -40,7 +40,6 @@ class SigninForm extends React.Component{
 
  
   userLogin = async(event) => {
-    alert("user")
     event.preventDefault();
     const data = {
       username:this.state.username,
@@ -55,7 +54,7 @@ class SigninForm extends React.Component{
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json)
+        console.log(json.access,json.username, json.refresh)
         if(json.access && json.username && json.refresh){
           localStorage.setItem('token', json.access);
           localStorage.setItem('user', json.username)
@@ -79,12 +78,12 @@ class SigninForm extends React.Component{
   }
 
   hrLogin = async(event) => {
-    alert("work");
     event.preventDefault();
     const data = {
       username:this.state.username,
       password:this.state.password,
     }
+    console.log(data);
     await fetch('http://localhost:8000/accounts/auth-token/', {
       method: 'POST',
       headers: {
@@ -94,6 +93,7 @@ class SigninForm extends React.Component{
     })
     .then(res => res.json())
     .then(json => {
+      console.log(json);
       if(json.access && json.username && json.refresh){
         localStorage.setItem('token', json.access);
         localStorage.setItem('user', json.username)
@@ -150,11 +150,11 @@ class SigninForm extends React.Component{
         <form method="post" onSubmit={this.hrLogin}>
           <div className="form-group m-2">
             <label htmlFor="email">Username</label>
-            <input type="text" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required minLength={8}/>
+            <input type="text" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter Username" onChange={e=>this.Username(e)} required minLength={8}/>
           </div>
           <div className="form-group m-2">
             <label htmlFor="password">Password</label>
-            <input type="password"  className="form-control" id="password" placeholder="Password" required minLength={8}/>
+            <input type="password"  className="form-control" id="password" placeholder="Password" onChange={e=>this.Password(e)} required minLength={8}/>
           </div>
         <button type="submit" className="btn btn-primary">Sign In</button>
         </form>
